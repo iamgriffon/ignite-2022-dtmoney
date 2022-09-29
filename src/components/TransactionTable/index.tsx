@@ -1,54 +1,50 @@
-import { SearchBox } from "../../pages/Transactions/components/SearchBox";
-import { PriceHighlight, TransactionsContainer, TransactionsTable as Table} from "./styles";
+import { Transaction } from '../../context/TransactionContext'
+import { SearchBox } from '../../pages/Transactions/components/SearchBox'
+import { dateFormatter, priceFormatter } from '../../utils/formatter'
+import {
+  NotFoundTableRow,
+  PriceHighlight,
+  TransactionsContainer,
+  TransactionsTable as Table,
+} from './styles'
 
-export function TransactionsTable() {
+interface TransactionsTableProps {
+  data: Transaction[]
+}
+
+export function TransactionsTable({ data }: TransactionsTableProps) {
   return (
     <TransactionsContainer>
       <SearchBox />
-    <Table>
-      <tbody>
-        <tr>
-          <td width="50%">Desenvolvimento de Site</td>
-          <td>
-            <PriceHighlight color='income'>
-              R$ 12.000,00
-            </PriceHighlight>
-          </td>
-          <td>Venda</td>
-          <td>13/04/2022</td>
-        </tr>
-        <tr>
-          <td width="50%">Corre</td>
-          <td>
-            <PriceHighlight color='outcome'>
-             - R$ 120,00
-            </PriceHighlight>
-          </td>
-          <td>Compra</td>
-          <td>16/04/2022</td>
-        </tr>
-        <tr>
-          <td width="50%">Desenvolvimento de Site</td>
-          <td>
-            <PriceHighlight color='income'>
-              R$ 12.000,00
-            </PriceHighlight>
-          </td>
-          <td>Venda</td>
-          <td>13/04/2022</td>
-        </tr>
-        <tr>
-          <td width="50%">Corre</td>
-          <td>
-            <PriceHighlight color='outcome'>
-               - R$ 120,00
-            </PriceHighlight>
-          </td>
-          <td>Compra</td>
-          <td>16/04/2022</td>
-        </tr>
-      </tbody>
-    </Table>
+      <Table>
+        <tbody>
+          {data.length ? (
+            data.map((transaction) => {
+              return (
+                <tr key={transaction.id}>
+                  <td width="50%">{transaction.description}</td>
+                  <td>
+                    <PriceHighlight color={transaction.type}>
+                      {transaction.type === 'outcome' && '- '}
+                      {priceFormatter.format(transaction.amount)}
+                    </PriceHighlight>
+                  </td>
+                  <td>{transaction.category}</td>
+                  <td>
+                    {dateFormatter.format(new Date(transaction.createdAt))}
+                  </td>
+                </tr>
+              )
+            })
+          ) : (
+            <tr>
+              <NotFoundTableRow>
+                Sorry, no results were found for your search
+              </NotFoundTableRow>
+            </tr>
+          )}
+        </tbody>
+      </Table>
     </TransactionsContainer>
   )
 }

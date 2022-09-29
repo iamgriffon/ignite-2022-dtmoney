@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const TransactionsContainer = styled.main`
-
   width: 100%;
   max-width: 1120px;
   margin: 4rem auto 0;
@@ -9,14 +8,14 @@ export const TransactionsContainer = styled.main`
 `
 
 export const TransactionsTable = styled.table`
-width: 100%;
-border-collapse: separate;
-border-spacing: 0 0.5rem;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
 
-td {
-  padding: 1.25rem 2rem;
-  background: ${props => props.theme["gray-700"]};
-}
+  td {
+    padding: 1.25rem 2rem;
+    background: ${(props) => props.theme['gray-700']};
+  }
   &:first-child {
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
@@ -26,12 +25,25 @@ td {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
   }
-`;
+`
 
 interface PriceHighlightProps {
-  color: 'income' | 'outcome';
+  color: 'income' | 'outcome'
 }
 
 export const PriceHighlight = styled.span<PriceHighlightProps>`
-  color: ${props => props.color ==='income' ? props.theme["green-300"] : props.theme["red-300"]}
+  color: ${(props) =>
+    props.color === 'income'
+      ? props.theme['green-300']
+      : props.theme['red-300']};
+`
+
+export const NotFoundTableRow = styled.td`
+  border-spacing: 0 0.5rem;
+  width: 100%;
+  border-collapse: separate;
+  text-align: center;
+  justify-content: center;
+  padding: 1.25rem 2rem;
+  background-color: ${(props) => props.theme['gray-500']};
 `
